@@ -39,7 +39,7 @@ public interface BotService {
 	
 	public Bot create(Bot bot);
 	
-	public Bot update(Bot bot) throws BotNotFoundException;
+	public Bot update(Bot bot) throws RecordNotFoundException;
 	
 	public void delete(Bot bot);
 

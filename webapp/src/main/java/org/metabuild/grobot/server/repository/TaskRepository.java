@@ -18,6 +18,8 @@ package org.metabuild.grobot.server.repository;
 import java.util.List;
 
 import org.metabuild.grobot.common.domain.Task;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -28,8 +30,9 @@ public interface TaskRepository extends CrudRepository<Task, String> {
 
 	public List<Task> findAll();
 	
+	public Page<Task> findAll(Pageable pageable);
+	
 	public Task findById(String id);
 
 	public List<Task> findByName(String name);
-	
 }

@@ -21,7 +21,7 @@ import org.metabuild.grobot.common.domain.Bot;
 import org.metabuild.grobot.common.domain.BotGroup;
 import org.metabuild.grobot.common.domain.BotStatus;
 import org.metabuild.grobot.server.service.BotGroupService;
-import org.metabuild.grobot.server.service.BotNotFoundException;
+import org.metabuild.grobot.server.service.RecordNotFoundException;
 import org.metabuild.grobot.server.service.BotService;
 import org.metabuild.grobot.server.status.StatusRequestProducer;
 import org.metabuild.grobot.server.status.StatusRequestService;
@@ -139,8 +139,7 @@ public class BotsController extends AbstractBaseController {
 	public String create(@ModelAttribute Bot bot, BindingResult result, Model uiModel) {
 		LOGGER.info("Creating new Bot with {}", bot);
 		botService.create(bot);
-		return "redirect:/" + getSelectedNavMenuItem().getPath() 
-				+ "/" + bot.getId();
+		return getBotDetailRedirect(bot);
 	}
 
 	/**
@@ -159,20 +158,17 @@ public class BotsController extends AbstractBaseController {
 	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.POST, params="form")
 	public String update(@ModelAttribute Bot bot, BindingResult result, Model uiModel) {
-		
 		if (result.hasErrors()) {
 			uiModel.addAttribute("errorMessage", result.getAllErrors());
 		}
-		LOGGER.info("Updating Bot with {}", bot);
 		
+		LOGGER.info("Updating Bot with {}", bot);
 		try {
 			botService.update(bot);
-		} catch (BotNotFoundException e) {
+		} catch (RecordNotFoundException e) {
 			uiModel.addAttribute("errorMessage", e.getMessage());
 		}
-		
-		return "redirect:/" + getSelectedNavMenuItem().getPath() 
-				+ "/" + bot.getId();
+		return getBotDetailRedirect(bot);
 	}
 
 	
@@ -196,6 +192,17 @@ public class BotsController extends AbstractBaseController {
 	 */
 	protected void populateBotGroupsSelect(Model uiModel) {
 		uiModel.addAttribute("allBotGroups", botGroupService.findAll());
+	}
+	
+	/**
+	 * @param bot
+	 * @return the redirect path to the bot detail page
+	 */
+	protected String getBotDetailRedirect(Bot bot) {
+		return new StringBuilder("redirect:/")
+			.append(getSelectedNavMenuItem().getPath())
+			.append("/").append(bot.getId())
+			.toString();
 	}
 
 	@Override

@@ -19,8 +19,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -47,7 +49,7 @@ public class TaskExecution implements Serializable {
 	@Column(name = "ID")
 	private String id;
 	
-	@ManyToOne(optional=false)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL, optional=false)
 	@JoinColumn(name="TASK_ID")
 	private Task task;
 	

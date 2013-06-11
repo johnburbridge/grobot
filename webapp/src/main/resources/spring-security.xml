@@ -14,7 +14,7 @@
     
     <http auto-config="true" use-expressions="true" disable-url-rewriting="true">
         <intercept-url pattern="/*" access="hasRole('ROLE_USER')" />
-        <form-login default-target-url="/bots" login-page="/login" authentication-failure-url="/loginfailed" />
+        <form-login default-target-url="/tasks" login-page="/login" authentication-failure-url="/loginfailed" />
         <logout logout-success-url="/logout" />
     </http>
  

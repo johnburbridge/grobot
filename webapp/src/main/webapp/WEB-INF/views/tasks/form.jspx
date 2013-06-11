@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     xmlns:joda="http://www.joda.org/joda/time/tags"
+     xmlns:spring="http://www.springframework.org/tags"
+     xmlns:form="http://www.springframework.org/tags/form"
+     version="2.0">
+     
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    
+    <spring:url value="/tasks" var="createUrl" />
+    <spring:url value="/tasks/${task.id}" var="updateUrl" />
+    
+    <c:choose>
+      <c:when test="${task.id == null}">
+        <c:set var="actionUrl">${createUrl}</c:set>
+        <c:set var="bannerText">New task</c:set>
+        <c:set var="submitButtonText">Create</c:set>
+      </c:when>
+      <c:otherwise>
+        <c:set var="actionUrl">${updateUrl}</c:set>
+        <c:set var="bannerText">Update ${task.name}</c:set>
+        <c:set var="submitButtonText">Update</c:set>
+      </c:otherwise>
+    </c:choose>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="2"><h4>${bannerText}</h4></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                  <form:errors path="*" cssClass="errorblock" element="div" />
+                  <c:if test="${errorMessage != null}">
+                    <div class="alert">${errorMessage}</div>
+                  </c:if>
+                  <form:form modelAttribute="task" action="${actionUrl}?form" id="taskUpdateForm" class="form-horizontal" method="post">
+                    <div class="control-group">
+                      <form:label class="control-label" path="name">Name</form:label>
+                      <div class="controls">
+                        <form:input path="name" id="name" placeholder="Task Name" />
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <form:label path="script" class="control-label" for="script">Script</form:label>
+                      <div class="controls">
+                        <form:select path="script" id="script">
+                          <form:options items="${allScripts}" itemLabel="name" itemValue="id" />
+                        </form:select>
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <form:label class="control-label" path="address">Arguments</form:label>
+                      <div class="controls">
+                        <form:input path="arguments" id="arguments" placeholder="Task Arguments" />
+                      </div>
+                    </div>
+                    <div class="control-group">
+                      <button type="submit" class="btn">${submitButtonText}</button> 
+                      <a href="${createUrl}" class="btn">Cancel</a>
+                    </div>
+                  </form:form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>

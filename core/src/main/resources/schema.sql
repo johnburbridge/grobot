@@ -3,6 +3,7 @@ create table BOTS (
   NAME varchar(60) not null, 
   ADDRESS varchar(40) not null,
   REGISTERED DATE,
+  ACTIVE boolean default false,
   unique UQ_BOTS_1 (ID), 
   unique UQ_BOTS_2 (NAME), 
   primary key (ID) 
@@ -12,7 +13,7 @@ create table BOT_GROUPS (
   ID varchar(36) not null,
   NAME varchar(60) not null,
   DESCRIPTION varchar(250),
-  ACTIVE boolean default true,
+  ACTIVE boolean default false,
   unique UQ_BOT_GROUPS_1 (ID), 
   unique UQ_BOT_GROUPS_2 (NAME), 
   primary key (ID) 

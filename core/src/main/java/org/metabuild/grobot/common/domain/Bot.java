@@ -21,7 +21,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -72,8 +71,9 @@ public class Bot implements Serializable {
 		inverseJoinColumns = @JoinColumn(name = "BOT_GROUP_ID", referencedColumnName="ID"))
 	private Set<BotGroup> botGroups = new HashSet<BotGroup>();
 	
-	@Transient
+	@Column(name = "ACTIVE")
 	private boolean active;
+	
 	@Transient
 	private Properties systemProperties;
 	@Transient

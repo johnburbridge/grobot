@@ -24,9 +24,8 @@ import java.util.Set;
 import org.junit.Test;
 import org.metabuild.grobot.common.domain.Bot;
 import org.metabuild.grobot.common.domain.BotGroup;
-import org.metabuild.grobot.server.service.BotGroupNotFoundException;
 import org.metabuild.grobot.server.service.BotGroupService;
-import org.metabuild.grobot.server.service.BotNotFoundException;
+import org.metabuild.grobot.server.service.RecordNotFoundException;
 import org.metabuild.grobot.server.service.BotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -77,7 +76,7 @@ public class BotGroupServiceTest extends AbstractDataTester {
 	}
 	
 	@Test
-	public void testUpdateWithBots() throws BotNotFoundException, BotGroupNotFoundException {
+	public void testUpdateWithBots() throws RecordNotFoundException {
 		BotGroup newGroup = new BotGroup("newBotGroupName2", new HashSet<Bot>(), null, true);
 		botGroupService.create(newGroup);
 		assertNotNull(newGroup.getId());

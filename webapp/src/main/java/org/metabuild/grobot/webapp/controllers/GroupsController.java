@@ -19,7 +19,7 @@ import java.util.Set;
 	
 import org.metabuild.grobot.common.domain.Bot;
 import org.metabuild.grobot.common.domain.BotGroup;
-import org.metabuild.grobot.server.service.BotGroupNotFoundException;
+import org.metabuild.grobot.server.service.RecordNotFoundException;
 import org.metabuild.grobot.server.service.BotGroupService;
 import org.metabuild.grobot.server.service.BotService;
 import org.slf4j.Logger;
@@ -143,7 +143,7 @@ public class GroupsController extends AbstractBaseController {
 		LOGGER.info("Updating BotGroup with {}", group);
 		try {
 			botGroupService.update(group);
-		} catch (BotGroupNotFoundException e) {
+		} catch (RecordNotFoundException e) {
 			uiModel.addAttribute("errorMessage", e.getMessage());
 		}
 		

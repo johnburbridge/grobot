@@ -102,7 +102,7 @@ public class LoginIntegrationTest {
 			
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String reponseBody = responseHandler.handleResponse(httpGetResponse);
-			assertTrue("Was not able to login successfully.", reponseBody.contains("BOTS"));
+			assertTrue("Was not able to login successfully.", reponseBody.contains("TASKS"));
 			get.releaseConnection();
 			
 			// TODO: logout and verify
@@ -163,8 +163,8 @@ public class LoginIntegrationTest {
 	
 	@Test
 	public void testNotLoggedInAccessDenied() throws ClientProtocolException, IOException {
-		String loginUrl = IntegrationTestUrlBuilder.getString(PROTECTED_RESOURCE);
-		HttpGet get = new HttpGet(loginUrl);
+		String protectedUrl = IntegrationTestUrlBuilder.getString(PROTECTED_RESOURCE);
+		HttpGet get = new HttpGet(protectedUrl);
 		httpClient = new DefaultHttpClient();
 		try {
 			httpClient.getCookieStore().clear();

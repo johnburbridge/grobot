@@ -13,25 +13,16 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.metabuild.grobot.server.repository;
-
-import org.metabuild.grobot.common.domain.Script;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+package org.metabuild.grobot.server.service;
 
 /**
+ * Exception thrown when a record cannot be found by the service typically during an update or delete operation
+ * 
  * @author jburbridge
- * @since 5/31/2013
+ * @since 6/7/2013
  */
-@Repository
-@Transactional
-public interface ScriptRepository extends JpaRepository<Script, String> {
+public class RecordNotFoundException extends Exception {
 
-	public Script findByPath(String path);
-	
-	public Page<Script> findAll(Pageable pageable);
-	
+	private static final long serialVersionUID = -5349031701344863863L;
+
 }

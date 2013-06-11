@@ -85,11 +85,11 @@ public class BotServiceImpl implements BotService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = BotNotFoundException.class, readOnly=false)
-	public Bot update(Bot updatedBot) throws BotNotFoundException {
+	@Transactional(rollbackFor = RecordNotFoundException.class, readOnly=false)
+	public Bot update(Bot updatedBot) throws RecordNotFoundException {
 		LOGGER.info("Saving existing bot with id {}", updatedBot.getId());
 		if (null == botRepository.findOne(updatedBot.getId())) {
-			throw new BotNotFoundException();
+			throw new RecordNotFoundException();
 		}
 		return botRepository.save(updatedBot);
 	}

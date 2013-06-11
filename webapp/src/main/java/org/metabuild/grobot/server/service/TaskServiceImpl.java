@@ -20,6 +20,8 @@ import java.util.List;
 import org.metabuild.grobot.common.domain.Task;
 import org.metabuild.grobot.server.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +47,15 @@ public class TaskServiceImpl implements TaskService {
 		return taskRepository.findAll();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.metabuild.grobot.server.service.TaskService#findAll(org.springframework.data.domain.Pageable)
+	 */
+	@Override
+	public Page<Task> findAll(Pageable pageable) {
+		return taskRepository.findAll(pageable);
+	}
+
 	/* (non-Javadoc)
 	 * @see org.metabuild.grobot.server.service.TaskService#findByName(java.lang.String)
 	 */
@@ -68,10 +79,19 @@ public class TaskServiceImpl implements TaskService {
 	 */
 	@Override
 	@Transactional(readOnly=false)
-	public Task save(Task task) {
+	public Task create(Task task) {
 		return taskRepository.save(task);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.metabuild.grobot.server.service.TaskService#update(org.metabuild.grobot.common.domain.Task)
+	 */
+	@Override
+	public Task update(Task task) throws RecordNotFoundException {
+		return null;
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.metabuild.grobot.server.service.TaskService#delete(org.metabuild.grobot.common.domain.Task)
 	 */

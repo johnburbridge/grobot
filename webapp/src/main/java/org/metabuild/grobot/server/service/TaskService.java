@@ -18,6 +18,8 @@ package org.metabuild.grobot.server.service;
 import java.util.List;
 
 import org.metabuild.grobot.common.domain.Task;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * @author jburbridge
@@ -27,11 +29,15 @@ public interface TaskService {
 
 	public List<Task> findAll();
 	
+	public Page<Task> findAll(Pageable pageable);
+
 	public List<Task> findByName(String name);
 	
 	public Task find(String id);
 	
-	public Task save(Task task);
+	public Task create(Task task);
+	
+	public Task update(Task task) throws RecordNotFoundException;
 	
 	public void delete(Task task);
 }

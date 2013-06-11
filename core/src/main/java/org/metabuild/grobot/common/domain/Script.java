@@ -72,6 +72,13 @@ public class Script implements Serializable {
 	}
 
 	/**
+	 * @return the record id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
 	 * @return the location
 	 */
 	public String getPath() {

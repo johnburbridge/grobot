@@ -20,12 +20,12 @@
       <ul class="nav nav-list">
         <li><h2 class="brand">GROBOT</h2></li>
         <li class="divider"></li>
-        <li><a href="${botsUrl}">Bots</a></li>
-        <li><a href="${groupsUrl}">Groups</a></li>
         <li><a href="${tasksUrl}">Tasks</a></li>
         <li><a href="${logsUrl}">Reports</a></li>
-        <li><a href="${configUrl}">Setup</a></li>
+        <li><a href="${groupsUrl}">Groups</a></li>
+        <li><a href="${botsUrl}">Bots</a></li>
         <li class="divider"></li>
+        <li><a href="${configUrl}">Setup</a></li>
         <li><a href="${logoutUrl}">Logout</a></li>
         <li><a href="${configUrl}">Help</a></li>
       </ul>

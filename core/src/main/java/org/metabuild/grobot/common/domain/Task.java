@@ -51,7 +51,7 @@ public class Task  implements Serializable {
 	@Column(name = "NAME")
 	private String name;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL, optional=false)
 	@JoinColumn(name = "SCRIPT_ID")
 	private Script script;
 	

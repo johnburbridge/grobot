@@ -40,7 +40,7 @@ public interface BotGroupService {
 	
 	public BotGroup create(BotGroup botGroup);
 
-	public BotGroup update(BotGroup botGroup) throws BotGroupNotFoundException;
+	public BotGroup update(BotGroup botGroup) throws RecordNotFoundException;
 	
 	public void delete(BotGroup botGroup);
 

@@ -84,10 +84,10 @@ public class BotGroupServiceImpl implements BotGroupService {
 
 	@Override
 	@Transactional(readOnly=false)
-	public BotGroup update(BotGroup botGroup) throws BotGroupNotFoundException {
+	public BotGroup update(BotGroup botGroup) throws RecordNotFoundException {
 		LOGGER.info("Updating BotGroup with {}", botGroup); 
 		if (null == botGroupRepository.findOne(botGroup.getId())) {
-			throw new BotGroupNotFoundException();
+			throw new RecordNotFoundException();
 		}
 		return botGroupRepository.save(botGroup);
 	}

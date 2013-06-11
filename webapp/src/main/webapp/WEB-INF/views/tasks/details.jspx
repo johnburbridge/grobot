@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <div xmlns:jsp="http://java.sun.com/JSP/Page"
      xmlns:c="http://java.sun.com/jsp/jstl/core"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
      xmlns:joda="http://www.joda.org/joda/time/tags"
      xmlns:spring="http://www.springframework.org/tags"
      version="2.0">
@@ -8,8 +9,18 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     
-    <h3>Task Details</h3>  
-    <table class="table table-striped table-bordered">
+    <spring:url value="/tasks" var="listUrl" />
+    <spring:url value="/tasks?form" var="createFormUrl" />
+    <spring:url value="/tasks/${task.id}?form" var="updateFormUrl" />
+    <spring:url value="/tasks/${task.id}" var="showUrl" />
+    <spring:url value="/tasks/${task.id}?delete" var="deleteUrl" />
+    
+    <a href="${listUrl}">list</a> | 
+    <a href="${createFormUrl}">new</a> | 
+    <a href="${updateFormUrl}">edit</a> |
+    <a href="${deleteUrl}">delete</a> 
+    
+    <table class="table">
         <thead>
             <tr>
                 <th colspan="2">${task.name}</th>
@@ -17,19 +28,24 @@
         </thead>
         <tbody>
             <tr>
-                <td>Id</td><td>${task.id}</td>
+                <td>Id</td>
+                <td>${task.id}</td>
             </tr>
             <tr>
-                <td>Name</td><td>${task.name}</td>
+                <td>Name</td>
+                <td>${task.name}</td>
             </tr>
             <tr>
-                <td>Script</td><td>${task.script.path}</td>
+                <td>Script</td>
+                <td>${task.script.path}</td>
             </tr>
             <tr>
-                <td>Arguments</td><td>${task.arguments}</td>
+                <td>Arguments</td>
+                <td>${task.arguments}</td>
             </tr>
             <tr>
-                <td>Execution log</td><td>${task.taskExecutions}</td>
+                <td>Execution log</td>
+                <td>${fn:length(task.taskExecutions)}</td>
             </tr>
         </tbody>
     </table>
