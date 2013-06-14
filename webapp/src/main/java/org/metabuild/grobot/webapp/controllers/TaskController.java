@@ -157,7 +157,7 @@ public class TaskController extends AbstractBaseController {
 	/**
 	 * deletes and presents the list view
 	 */
-	@RequestMapping(value="/{id}", method=RequestMethod.POST, params="delete")
+	@RequestMapping(value="/{id}", method=RequestMethod.GET, params="delete")
 	public String delete(@PathVariable("id") String id, Model uiModel) {
 		Task task = taskService.find(id);
 		uiModel.addAttribute("task", task);

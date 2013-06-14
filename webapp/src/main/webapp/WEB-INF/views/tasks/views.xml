@@ -16,4 +16,10 @@
         <put-attribute name="activeHeader" value="tasks" />
         <put-attribute name="body" value="/WEB-INF/views/tasks/details.jspx" />
     </definition>
+    <definition extends="tasks" name="tasks/update">
+        <put-attribute name="pageTitle" value="Grobot Server &gt;&gt; Update Task" cascade="true" />
+        <put-attribute name="activeHeader" value="tasks" />
+        <put-attribute name="body" value="/WEB-INF/views/tasks/form.jspx" />
+    </definition>
+    
 </tiles-definitions>

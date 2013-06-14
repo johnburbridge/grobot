@@ -18,7 +18,6 @@ package org.metabuild.grobot.server.service;
 import java.util.List;
 
 import org.metabuild.grobot.common.domain.Bot;
-import org.metabuild.grobot.common.domain.BotGroup;
 import org.metabuild.grobot.server.repository.BotRepository;
 
 import org.slf4j.Logger;

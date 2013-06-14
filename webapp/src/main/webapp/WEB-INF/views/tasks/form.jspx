@@ -50,12 +50,12 @@
                       <form:label path="script" class="control-label" for="script">Script</form:label>
                       <div class="controls">
                         <form:select path="script" id="script">
-                          <form:options items="${allScripts}" itemLabel="name" itemValue="id" />
+                          <form:options items="${allScripts}" itemLabel="path" itemValue="id" />
                         </form:select>
                       </div>
                     </div>
                     <div class="control-group">
-                      <form:label class="control-label" path="address">Arguments</form:label>
+                      <form:label class="control-label" path="arguments">Arguments</form:label>
                       <div class="controls">
                         <form:input path="arguments" id="arguments" placeholder="Task Arguments" />
                       </div>
