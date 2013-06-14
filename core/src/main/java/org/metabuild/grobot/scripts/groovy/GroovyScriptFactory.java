@@ -22,6 +22,7 @@ import groovy.util.ResourceException;
 import groovy.util.ScriptException;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class GroovyScriptFactory implements ScriptWrapperFactory {
 	 * @param scriptsDir
 	 * @param engine
 	 */
-	public GroovyScriptFactory(BindingProvider bindingProvider, File scriptsDir, GroovyScriptEngine engine) {
+	protected GroovyScriptFactory(BindingProvider bindingProvider, File scriptsDir, GroovyScriptEngine engine) {
 		this.bindingProvider = bindingProvider;
 		this.scriptsDir = scriptsDir;
 		this.engine = engine;
@@ -63,19 +64,28 @@ public class GroovyScriptFactory implements ScriptWrapperFactory {
 	}
 
 	/**
+	 * @param scriptsDir
+	 * @throws IOException 
+	 */
+	public GroovyScriptFactory(File scriptsDir) throws IOException {
+		this(new GroovyBindingProvider(System.getProperties(), new Binding()), 
+				scriptsDir, new GroovyScriptEngine(scriptsDir.toString()));
+	}
+
+	/**
 	 * Recurses through the scripts directory and loads the groovy files
 	 * 
 	 * @return a list of scripts
 	 */
 	@Override
-	public List<ScriptWrapper> getScripts() {
+	public List<ScriptWrapper> loadScripts() {
 		List<ScriptWrapper> scripts = new ArrayList<ScriptWrapper>();
 		for (File file : getFiles(scriptsDir)) {
 			try {
 				Script script = engine.createScript(file.getAbsolutePath(), getBinding());
-				GroovyScript groovyTask = new GroovyScript(script);
-				groovyTask.setHash(DigestUtils.md5Hex(file.toString()));
-				scripts.add(groovyTask);
+				GroovyScript groovyScript = new GroovyScript(script);
+				groovyScript.setHash(DigestUtils.md5Hex(file.toString()));
+				scripts.add(groovyScript);
 			} catch (ResourceException e) {
 				LOGGER.warn("Could not load task from {}", file.getAbsolutePath(), e);
 			} catch (ScriptException e) {

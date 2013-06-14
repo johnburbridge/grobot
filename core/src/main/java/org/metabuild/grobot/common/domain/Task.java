@@ -55,6 +55,9 @@ public class Task  implements Serializable {
 	@JoinColumn(name = "SCRIPT_ID")
 	private Script script;
 	
+	@Column(name = "SCRIPT_NAME")
+	private String scriptName;
+	
 	@Column(name = "ARGUMENTS")
 	private String arguments;
 	
@@ -118,6 +121,20 @@ public class Task  implements Serializable {
 	 */
 	public void setScript(Script script) {
 		this.script = script;
+	}
+
+	/**
+	 * @return the scriptName
+	 */
+	public String getScriptName() {
+		return scriptName;
+	}
+
+	/**
+	 * @param scriptName the scriptName to set
+	 */
+	public void setScriptName(String scriptName) {
+		this.scriptName = scriptName;
 	}
 
 	/**

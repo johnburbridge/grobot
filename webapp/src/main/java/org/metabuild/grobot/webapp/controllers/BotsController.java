@@ -112,10 +112,8 @@ public class BotsController extends AbstractBaseController {
 	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public String details(@PathVariable("id") String id, Model uiModel) {
-		
 		uiModel.addAttribute("bot", botService.findById(id));
 		addSelectedMenuItem(uiModel);
-		
 		return BOTS_DETAILS_VIEW;
 	}
 	
@@ -147,7 +145,6 @@ public class BotsController extends AbstractBaseController {
 	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.GET, params="form")
 	public String updateForm(@PathVariable("id") String id, Model uiModel) {
-		
 		uiModel.addAttribute("bot", botService.findById(id));
 		populateBotGroupsSelect(uiModel);
 		return BOTS_FORM_VIEW;

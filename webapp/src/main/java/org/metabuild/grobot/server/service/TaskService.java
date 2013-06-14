@@ -33,7 +33,7 @@ public interface TaskService {
 
 	public List<Task> findByName(String name);
 	
-	public Task find(String id);
+	public Task findById(String id);
 	
 	public Task create(Task task);
 	

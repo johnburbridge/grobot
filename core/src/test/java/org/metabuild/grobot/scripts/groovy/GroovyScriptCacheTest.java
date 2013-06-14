@@ -64,7 +64,7 @@ public class GroovyScriptCacheTest {
 		when(script.toString()).thenReturn("MyMockScriptName");
 		List<ScriptWrapper> scripts = new ArrayList<ScriptWrapper>();
 		scripts.add(script);
-		when(scriptFactory.getScripts()).thenReturn(scripts);
+		when(scriptFactory.loadScripts()).thenReturn(scripts);
 		return scriptFactory;
 	}
 }

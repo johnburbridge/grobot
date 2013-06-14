@@ -26,6 +26,6 @@ public interface ScriptWrapperFactory {
 	/**
 	 * @return a list of scripts
 	 */
-	public List<ScriptWrapper> getScripts();
+	public List<ScriptWrapper> loadScripts();
 	
 }

@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Builds a Groovy Binding populated with system properties which will be passed along
- * to the GroovyScriptEnging.
+ * to the GroovyScriptEngine.
  * 
  * @author jburbrid
  * @since 9/27/2012

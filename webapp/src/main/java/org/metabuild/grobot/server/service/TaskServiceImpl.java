@@ -19,6 +19,8 @@ import java.util.List;
 
 import org.metabuild.grobot.common.domain.Task;
 import org.metabuild.grobot.server.repository.TaskRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +37,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TaskServiceImpl implements TaskService {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(TaskServiceImpl.class);
+	
 	@Autowired
 	private TaskRepository taskRepository;
 	
@@ -70,7 +74,7 @@ public class TaskServiceImpl implements TaskService {
 	 */
 	@Override
 	@Transactional(readOnly=true)
-	public Task find(String id) {
+	public Task findById(String id) {
 		return taskRepository.findById(id);
 	}
 
@@ -88,8 +92,13 @@ public class TaskServiceImpl implements TaskService {
 	 * @see org.metabuild.grobot.server.service.TaskService#update(org.metabuild.grobot.common.domain.Task)
 	 */
 	@Override
-	public Task update(Task task) throws RecordNotFoundException {
-		return null;
+	@Transactional(rollbackFor = RecordNotFoundException.class, readOnly=false)
+	public Task update(Task updatedTask) throws RecordNotFoundException {
+		LOGGER.info("Saving existing task with id {}", updatedTask.getId());
+		if (null == taskRepository.findOne(updatedTask.getId())) {
+			throw new RecordNotFoundException();
+		}
+		return taskRepository.save(updatedTask);
 	}
 	
 	/* (non-Javadoc)

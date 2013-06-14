@@ -19,6 +19,8 @@ import java.util.Set;
 
 import org.metabuild.grobot.common.domain.Script;
 import org.metabuild.grobot.common.domain.Task;
+import org.metabuild.grobot.scripts.groovy.GroovyScript;
+import org.metabuild.grobot.scripts.groovy.GroovyScriptCache;
 import org.metabuild.grobot.server.service.RecordNotFoundException;
 import org.metabuild.grobot.server.service.ScriptService;
 import org.metabuild.grobot.server.service.TaskService;
@@ -57,27 +59,31 @@ public class TaskController extends AbstractBaseController {
 	@Autowired
 	private ScriptService scriptService;
 	
-	@InitBinder
-	public void initBinder(WebDataBinder binder) throws Exception {
-		binder.registerCustomEditor(Set.class, new CustomCollectionEditor(Set.class) { 
-			protected Object convertElement(Object element) {
-				if (element instanceof Script) {
-					return element;
-				} if (element instanceof String) {
-					return scriptService.findById(element.toString());
-				} else {
-					return null;
-				}
-			}
-		});
-	}
+	@Autowired
+	private GroovyScriptCache groovyScriptCache;
+	
+//	@InitBinder
+//	public void initBinder(WebDataBinder binder) throws Exception {
+//		binder.registerCustomEditor(Set.class, new CustomCollectionEditor(Set.class) { 
+//			protected Object convertElement(Object element) {
+//				if (element instanceof Script) {
+//					return element;
+//				} if (element instanceof String) {
+//					return scriptService.findById(element.toString());
+//					GroovyScript script = groovyScriptCache.get((String) element);
+//					return script != null ? script.getHash() : null;
+//				} else {
+//					return null;
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Display the list of tasks
 	 */
 	@RequestMapping(method=RequestMethod.GET)
 	public String list(Model uiModel, Pageable pageable) {
-		
 		final Page<Task> page = taskService.findAll(pageable);
 		uiModel.addAttribute("page", page);
 		addSelectedMenuItem(uiModel);
@@ -90,15 +96,8 @@ public class TaskController extends AbstractBaseController {
 	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public String details(@PathVariable("id") String id, Model uiModel) {
-		
-		final Task task = taskService.find(id);
-		if (task != null) {
-			uiModel.addAttribute("task", task);
-		} else {
-			LOGGER.warn("Couldn't find task with id {}.", id);
-		}
+		uiModel.addAttribute("task", taskService.findById(id));
 		addSelectedMenuItem(uiModel);
-		
 		return TASKS_DETAILS_VIEW;
 	}
 	
@@ -130,7 +129,7 @@ public class TaskController extends AbstractBaseController {
 	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.GET, params="form")
 	public String updateForm(@PathVariable("id") String id, Model uiModel) {
-		uiModel.addAttribute("task", taskService.find(id));
+		uiModel.addAttribute("task", taskService.findById(id));
 		populateScriptsSelect(uiModel);
 		return TASKS_FORM_VIEW;
 	}
@@ -159,7 +158,7 @@ public class TaskController extends AbstractBaseController {
 	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.GET, params="delete")
 	public String delete(@PathVariable("id") String id, Model uiModel) {
-		Task task = taskService.find(id);
+		Task task = taskService.findById(id);
 		uiModel.addAttribute("task", task);
 		taskService.delete(task);
 		return "redirect:/" + getSelectedNavMenuItem().getPath();
@@ -169,8 +168,7 @@ public class TaskController extends AbstractBaseController {
 	 * @param uiModel
 	 */
 	protected void populateScriptsSelect(Model uiModel) {
-		uiModel.addAttribute("allScripts", scriptService.findAll());
-		
+		uiModel.addAttribute("allScripts", groovyScriptCache.getAll());
 	}
 	
 	/**
@@ -184,7 +182,7 @@ public class TaskController extends AbstractBaseController {
 			.append("/").append(task.getId())
 			.toString();
 	}
-
+	
 	@Override
 	public NavMenuItems getSelectedNavMenuItem() {
 		return NavMenuItems.TASKS;

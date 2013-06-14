@@ -46,23 +46,23 @@ public class GroovyScriptCache {
 	 */
 	protected GroovyScriptCache(GroovyScriptFactory groovyScriptFactory, Map<String, GroovyScript> registry) {
 		this.groovyScriptFactory = groovyScriptFactory;
-		this.registry = loadTasks(registry);
+		this.registry = loadScripts(registry);
 	}
 	
 	/**
 	 * @param registry map to be populated
 	 * @return the populated registry map
 	 */
-	protected Map<String, GroovyScript> loadTasks(Map<String, GroovyScript> registry) {
-		for (ScriptWrapper task : groovyScriptFactory.getScripts()) {
-			registry.put(task.getHash(), (GroovyScript) task);
+	protected Map<String, GroovyScript> loadScripts(Map<String, GroovyScript> registry) {
+		for (ScriptWrapper script : groovyScriptFactory.loadScripts()) {
+			registry.put(script.getHash(), (GroovyScript) script);
 		}
 		return registry;
 	}
 	
 	/**
 	 * @param hash
-	 * @return the task
+	 * @return the script
 	 */
 	public GroovyScript get(String hash) {
 		return registry.get(hash);

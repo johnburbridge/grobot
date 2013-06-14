@@ -57,7 +57,7 @@ public class GroovyScriptFactoryTest {
 	@Test
 	public void testGetScripts() throws IOException {
 		GroovyScriptFactory factory = new GroovyScriptFactory(getGroovyBindingProvider(), new File(SCRIPTS_DIR), new GroovyScriptEngine(SCRIPTS_DIR));
-		List<ScriptWrapper> scripts = factory.getScripts();
+		List<ScriptWrapper> scripts = factory.loadScripts();
 		assertNotNull(scripts);
 		assertTrue(scripts.size() > 0);
 	}
@@ -87,7 +87,6 @@ public class GroovyScriptFactoryTest {
 	}
 
 	protected BindingProvider getGroovyBindingProvider() {
-		Map<Object,Object> paramMap = new HashMap<Object,Object>();
-		return new GroovyBindingProvider(paramMap, new Binding());
+		return new GroovyBindingProvider(new HashMap<Object,Object>(), new Binding());
 	}
 }

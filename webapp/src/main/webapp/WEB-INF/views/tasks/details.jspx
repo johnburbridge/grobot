@@ -37,7 +37,7 @@
             </tr>
             <tr>
                 <td>Script</td>
-                <td>${task.script.path}</td>
+                <td>${task.scriptName}</td>
             </tr>
             <tr>
                 <td>Arguments</td>

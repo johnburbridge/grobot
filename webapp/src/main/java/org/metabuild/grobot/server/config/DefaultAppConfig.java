@@ -93,11 +93,12 @@ public class DefaultAppConfig {
 	 * @param scriptsDir
 	 * @param groovyScriptEngine
 	 * @return the in-memory cache for scripts
+	 * @throws IOException 
 	 */
 	@Autowired(required=true)
 	@Bean(name="groovyTaskCache")
-	public GroovyScriptCache getGroovyTaskCache(BindingProvider bindingProvider, String scriptsDir, GroovyScriptEngine groovyScriptEngine) {
-		final GroovyScriptFactory groovyScriptFactory = new GroovyScriptFactory(bindingProvider, new File(scriptsDir), groovyScriptEngine);
+	public GroovyScriptCache getGroovyTaskCache(String scriptsDir) throws IOException {
+		final GroovyScriptFactory groovyScriptFactory = new GroovyScriptFactory(new File(scriptsDir));
 		return new GroovyScriptCache(groovyScriptFactory);
 	}
 	

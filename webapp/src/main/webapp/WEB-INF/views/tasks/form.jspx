@@ -47,10 +47,10 @@
                       </div>
                     </div>
                     <div class="control-group">
-                      <form:label path="script" class="control-label" for="script">Script</form:label>
+                      <form:label path="scriptName" class="control-label" for="scriptName">Script</form:label>
                       <div class="controls">
-                        <form:select path="script" id="script">
-                          <form:options items="${allScripts}" itemLabel="path" itemValue="id" />
+                        <form:select path="scriptName" id="scriptName">
+                          <form:options items="${allScripts}" itemLabel="name" itemValue="name" />
                         </form:select>
                       </div>
                     </div>
