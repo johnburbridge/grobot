@@ -65,6 +65,6 @@ subprojects {
 } 
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '1.5'
+	gradleVersion = '1.12'
 }
 
