@@ -16,6 +16,15 @@ From the root of the project, you can build everything by issuing:
 
 This will download all of the dependencies from Maven Central, install them, and compile and test each component.
 
+##The Grobot REST API
+/api/{version}/bots          GET        200     A list of all bots
+/api/{version}/bots          POST       201     Attempt to create a new bot record
+/api/{version}/bots/{id}     GET        200     Returns the details of a bot by id
+/api/{version}/bots/{id}     PUT        201     Updates a specific bot details
+/api/{version}/bots/{id}     DELETE     201     Updates a specific bot details
+/api/{version}/groups        GET        200     A list of all groups
+/api/{version}/groups/{id}   GET        200     Returns the details of a group by id
+
 
 ## LICENSE
 Copyright 2012 Metabuild Software, LLC. (http://www.metabuild.org)
