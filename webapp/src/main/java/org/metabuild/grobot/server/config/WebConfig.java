@@ -52,11 +52,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @Configuration
 @EnableWebMvc
 @ImportResource(value = { 
-	"classpath:activeMqBrokerConfig.xml",
-	"classpath:spring-security.xml"
+	"classpath:activeMqBrokerConfig.xml"
 })
 @Import({ 
 	DefaultAppConfig.class,
+	SecurityConfig.class,
 	SwaggerConfig.class,
 	ServerJmsConfig.class
 })
