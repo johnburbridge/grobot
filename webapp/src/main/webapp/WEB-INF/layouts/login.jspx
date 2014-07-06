@@ -10,8 +10,8 @@
     <jsp:directive.page pageEncoding="UTF-8" /> 
     
     <tiles:insertAttribute name="header" ignore="true" />
-    <spring:url value="/j_spring_security_check" var="loginUrl" />
-    <spring:url value="/j_spring_security_logout" var="logoutUrl" />
+    <spring:url value="/login" var="loginUrl" />
+    <spring:url value="/logout" var="logoutUrl" />
     
     <body>
         <div class="container" style="vertical-align: middle">
@@ -34,11 +34,9 @@
                     You have been logged out.
                 </div>
             </c:if>
-                <input type="text" name="j_username" class="span4" placeholder="Username" />
-                <input type="password" name="j_password" class="span4" placeholder="Password" />
-                <label class="checkbox">
-                  <input type="checkbox" name="rememberMe" /> Remember Username
-                </label>
+                <input type="text" name="username" class="span4" placeholder="Username" />
+                <input type="password" name="password" class="span4" placeholder="Password" />
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
               </div>
               <div class="modal-footer">
                 <input type="submit" class="btn btn-warning" data-loading-text="Loggin in..." value="Login" />

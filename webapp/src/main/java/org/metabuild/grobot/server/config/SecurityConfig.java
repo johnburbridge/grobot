@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
 			.antMatchers("/resources/**")
-			.antMatchers("/ping"); // #3
+			.antMatchers("/ping");
 	}
 	
 	@Override
@@ -45,11 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/**").hasRole("USER")
 			.anyRequest().anonymous()
 		  .and()
-			.httpBasic()
-		  .and()
 			.formLogin()
 			.loginPage("/login")
 			.failureUrl("/loginfailed")
-			.permitAll();
+			.permitAll()
+		  .and()
+			.antMatcher("/api**").csrf().disable()
+;
 	}
 }

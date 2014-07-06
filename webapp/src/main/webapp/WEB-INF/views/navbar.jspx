@@ -13,7 +13,7 @@
     <spring:url value="/groups" var="groupsUrl" />
     <spring:url value="/logs" var="logsUrl" />
     <spring:url value="/config" var="configUrl" />
-    <spring:url value="/j_spring_security_logout" var="logoutUrl" />
+    <spring:url value="/logout" var="logoutUrl" />
     
     <div id="navWrapper">
       <ul class="nav nav-list">

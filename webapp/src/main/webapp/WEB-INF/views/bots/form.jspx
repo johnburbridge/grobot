@@ -40,6 +40,7 @@
                     <div class="alert">${errorMessage}</div>
                   </c:if>
                   <form:form modelAttribute="bot" action="${actionUrl}?form" id="botUpdateForm" class="form-horizontal" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="control-group">
                       <form:label class="control-label" path="name">Name</form:label>
                       <div class="controls">
