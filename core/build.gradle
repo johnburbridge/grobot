@@ -32,5 +32,8 @@ dependencies {
 	'javax.jms:jms:1.1',
 	'joda-time:joda-time:2.1',
 	'commons-codec:commons-codec:1.7',
-	'org.hibernate:hibernate-entitymanager:4.1.7.Final'
+	'org.hibernate:hibernate-entitymanager:4.1.7.Final',
+	'com.fasterxml.jackson.core:jackson-annotations:2.4.1',
+	'com.fasterxml.jackson.core:jackson-core:2.4.1',
+	'com.fasterxml.jackson.core:jackson-databind:2.4.1'
 }

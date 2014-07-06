@@ -33,6 +33,9 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author jburbrid
  * @since 9/27/2012
@@ -58,6 +61,7 @@ public class BotGroup implements Serializable {
 	@Column(name = "ACTIVE")
 	private boolean active;
 	
+	@JsonBackReference
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "BOT_GROUP_MEMBERS",
 		joinColumns = @JoinColumn(name = "BOT_GROUP_ID", referencedColumnName="ID"),
@@ -65,6 +69,7 @@ public class BotGroup implements Serializable {
 	private Set<Bot> bots = new HashSet<Bot>();
 	
 	@Transient
+	@JsonIgnore
 	private BotGroup parent;
 
 	/**

@@ -21,7 +21,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
-import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,6 +38,8 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.GenericGenerator;
 import org.joda.time.DateTime;
 import org.metabuild.grobot.common.jms.StatusResponse;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * @author jburbridge
@@ -66,6 +67,7 @@ public class Bot implements Serializable {
 	@Column(name = "REGISTERED")
 	private Date registered;
 
+	@JsonManagedReference
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "BOT_GROUP_MEMBERS",
 		joinColumns = @JoinColumn(name = "BOT_ID", referencedColumnName="ID"),
@@ -208,14 +210,14 @@ public class Bot implements Serializable {
 	 * @return the registered date
 	 */
 	public Date getRegistered() {
-		return (Date) registered.clone();
+		return (null != registered) ? (Date) registered.clone() : null;
 	}
 
 	/**
 	 * @param registered the date to set
 	 */
 	public void setRegistered(Date registered) {
-		this.registered = (Date) registered.clone();
+		this.registered = (null != registered) ? (Date) registered.clone() : null;
 	}
 
 	/**

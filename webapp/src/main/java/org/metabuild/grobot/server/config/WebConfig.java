@@ -24,6 +24,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableArgumentResolver;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -33,6 +35,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.mvc.method.annotation.ServletWebArgumentResolverAdapter;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 /**
  * Spring Web JavaConfig style configuration
@@ -51,10 +56,14 @@ import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 	"classpath:spring-security.xml"
 })
 @Import({ 
-	DefaultAppConfig.class, 
+	DefaultAppConfig.class,
+	SwaggerConfig.class,
 	ServerJmsConfig.class
 })
-@ComponentScan(basePackages = { "org.metabuild.grobot.webapp.controllers" })
+@ComponentScan(basePackages = { 
+	"org.metabuild.grobot.server.rest",
+	"org.metabuild.grobot.webapp.controllers"
+})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
 	/**
@@ -74,6 +83,17 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
+	
+	@Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        final MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+        final ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        converter.setObjectMapper(objectMapper);
+        converter.setPrettyPrint(true);
+        converters.add(converter);
+        super.configureMessageConverters(converters);
+    }
 	
 	/**
 	 * Add PageableArgumentResolver to help with pagination
