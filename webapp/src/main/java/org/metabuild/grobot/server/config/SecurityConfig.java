@@ -16,6 +16,7 @@ package org.metabuild.grobot.server.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -24,7 +25,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @EnableWebSecurity
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
 	@Autowired
 	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -32,25 +33,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.withUser("user2").password("password2").roles("USER");
 	}
 	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring()
-			.antMatchers("/resources/**")
-			.antMatchers("/ping");
+	@Configuration
+	@Order(1)
+	public static class ApiWebSecurityConfig extends WebSecurityConfigurerAdapter {
+		@Override
+		protected void configure(HttpSecurity http) throws Exception {
+			http.antMatcher("/api/**")
+				.authorizeRequests()
+					.antMatchers("/api/**").hasRole("USER")
+					.and()
+				.httpBasic();
+		}
 	}
 	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/**").hasRole("USER")
-			.anyRequest().anonymous()
-		  .and()
-			.formLogin()
-			.loginPage("/login")
-			.failureUrl("/loginfailed")
-			.permitAll()
-		  .and()
-			.antMatcher("/api**").csrf().disable()
-;
+	@Configuration
+	public static class FormLoginWebSecurityConfig extends WebSecurityConfigurerAdapter {
+		
+		@Override
+		public void configure(WebSecurity web) throws Exception {
+			web.ignoring()
+				.antMatchers("/resources/**")
+				.antMatchers("/ping");
+		}
+		
+		@Override
+		protected void configure(HttpSecurity http) throws Exception {
+			http.authorizeRequests()
+					.antMatchers("/**").hasRole("USER")
+					.and()
+				.formLogin()
+					.loginPage("/login")
+					.permitAll();
+		}
 	}
 }
